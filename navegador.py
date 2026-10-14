@@ -1,9 +1,8 @@
 """
-Simulador de Navegador Web usando estructura de datos tipo Pila (LIFO)
-Último en entrar, primero en salir.
+Simulador de Navegador Web usando estructura de datos tipo Lifo
 """
 
-historial = []  # La pila. El último elemento es la página actual
+historial = []  
 
 def visitar_pagina():
     url = input("Ingresa la URL o nombre de la página a visitar: ").strip()

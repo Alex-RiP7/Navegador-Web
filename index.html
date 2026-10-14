@@ -47,22 +47,21 @@
 </head>
 <body>
     <h1>Simulador de Navegador Web</h1>
-    <p style="text-align:center;">Usa una pila (LIFO): el último elemento registrado es el primero en recuperarse.</p>
+    <p style="text-align:center;">Usa una pila, el último elemento registrado es el primero en recuperarse.</p>
 
     <div class="menu">
         <input type="text" id="urlInput" placeholder="Escribe la URL o nombre de la página">
         <button onclick="visitar()">1. Visitar una página web</button>
         <button onclick="regresar()">2. Regresar a la página anterior</button>
         <button onclick="mostrarActual()">3. Mostrar la página actual</button>
-        <button onclick="mostrarHistorial()">4. Mostrar historial (más reciente primero)</button>
-        <button onclick="verificarOLimpiar()">5. Verificar si está vacío / Eliminar historial</button>
+        <button onclick="mostrarHistorial()">4. Mostrar historial</button>
+        <button onclick="verificarOLimpiar()">5. Eliminar historial</button>
         <button onclick="salir()" style="background-color:#dc3545;">6. Salir</button>
     </div>
 
     <div id="salida">Bienvenido. Selecciona una opción del menú.</div>
 
     <script>
-        // Pila: el último elemento es la página actual
         let historial = [];
 
         function mostrar(mensaje) {
