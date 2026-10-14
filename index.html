@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulador de Navegador Web (Pila LIFO)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 { text-align: center; color: #333; }
+        .menu { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        button {
+            display: block;
+            width: 100%;
+            margin: 8px 0;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+        }
+        button:hover { background-color: #0056b3; }
+        #salida {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            min-height: 100px;
+            white-space: pre-wrap;
+            border: 1px solid #ddd;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simulador de Navegador Web</h1>
+    <p style="text-align:center;">Usa una pila (LIFO): el último elemento registrado es el primero en recuperarse.</p>
+
+    <div class="menu">
+        <input type="text" id="urlInput" placeholder="Escribe la URL o nombre de la página">
+        <button onclick="visitar()">1. Visitar una página web</button>
+        <button onclick="regresar()">2. Regresar a la página anterior</button>
+        <button onclick="mostrarActual()">3. Mostrar la página actual</button>
+        <button onclick="mostrarHistorial()">4. Mostrar historial (más reciente primero)</button>
+        <button onclick="verificarOLimpiar()">5. Verificar si está vacío / Eliminar historial</button>
+        <button onclick="salir()" style="background-color:#dc3545;">6. Salir</button>
+    </div>
+
+    <div id="salida">Bienvenido. Selecciona una opción del menú.</div>
+
+    <script>
+        // Pila: el último elemento es la página actual
+        let historial = [];
+
+        function mostrar(mensaje) {
+            document.getElementById('salida').textContent = mensaje;
+        }
+
+        function visitar() {
+            const url = document.getElementById('urlInput').value.trim();
+            if (url) {
+                historial.push(url);
+                mostrar(`Visitando: ${url}\nPágina actual actualizada.`);
+                document.getElementById('urlInput').value = '';
+            } else {
+                mostrar('Por favor escribe una página o URL.');
+            }
+        }
+
+        function regresar() {
+            if (historial.length <= 1) {
+                mostrar('No hay página anterior a la que regresar.');
+                return;
+            }
+            const saliendo = historial.pop();
+            mostrar(`Regresando desde: ${saliendo}\nAhora estás en: ${historial[historial.length - 1]}`);
+        }
+
+        function mostrarActual() {
+            if (historial.length === 0) {
+                mostrar('No hay página actual. El historial está vacío.');
+            } else {
+                mostrar(`Página actual: ${historial[historial.length - 1]}`);
+            }
+        }
+
+        function mostrarHistorial() {
+            if (historial.length === 0) {
+                mostrar('El historial está vacío.');
+                return;
+            }
+            let texto = '=== Historial de páginas (más reciente primero) ===\n';
+            for (let i = historial.length - 1; i >= 0; i--) {
+                texto += `${historial.length - i}. ${historial[i]}\n`;
+            }
+            mostrar(texto);
+        }
+
+        function verificarOLimpiar() {
+            if (historial.length === 0) {
+                mostrar('El historial está vacío.');
+            } else {
+                if (confirm('El historial tiene páginas. ¿Deseas eliminar todo el historial?')) {
+                    historial = [];
+                    mostrar('Historial eliminado.');
+                } else {
+                    mostrar('Historial conservado.');
+                }
+            }
+        }
+
+        function salir() {
+            mostrar('Programa terminado. Puedes cerrar esta pestaña.');
+            document.querySelectorAll('button').forEach(btn => btn.disabled = true);
+            document.getElementById('urlInput').disabled = true;
+        }
+    </script>
+</body>
+</html>
